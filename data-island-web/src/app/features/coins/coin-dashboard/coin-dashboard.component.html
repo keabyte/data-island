@@ -1,0 +1,39 @@
+<div>
+	<div class="text-2xl font-semibold pb-4">Cryptocurrency Dashboard</div>
+	<mat-table [dataSource]="dataSource">
+		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+		<mat-row *matRowDef="let coin; columns: displayedColumns"></mat-row>
+
+		<ng-container matColumnDef="market_cap_rank">
+			<mat-header-cell *matHeaderCellDef>
+				<span>COIN</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin">
+				<span class="mr-5 text-gray-500 font-semibold">{{ coin.market_cap_rank }}</span>
+				<img src="{{ coin.image }}" class="w-8 mr-3" />
+				<span class="font-semibold">
+					<span class="mr-2">{{ coin.name }}</span>
+					<span class="text-gray-400">{{ coin.symbol.toUpperCase() }}</span>
+				</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="current_price">
+			<mat-header-cell *matHeaderCellDef>
+				<span>PRICE</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin">
+				<span class="font-semibold">{{ coin.current_price | currency }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="market_cap">
+			<mat-header-cell *matHeaderCellDef>
+				<span>MARKET CAP</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin">
+				<span class="font-semibold">{{ coin.market_cap | currency }}</span>
+			</mat-cell>
+		</ng-container>
+	</mat-table>
+</div>
