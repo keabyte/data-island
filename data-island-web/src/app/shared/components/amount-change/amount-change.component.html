@@ -1,0 +1,16 @@
+<span
+	class="no-wrap"
+	[ngClass]="{
+		'color-down': changeEffectIndicator < 0,
+		'color-up': changeEffectIndicator > 0
+	}"
+>
+	<mat-icon *ngIf="changeEffectIndicator === -1">arrow_drop_down</mat-icon>
+	<mat-icon *ngIf="changeEffectIndicator === 1">arrow_drop_up</mat-icon>
+	<span *ngIf="changeEffectIndicator === 0" class="ps-3">&nbsp;</span>
+	<ng-container *ngIf="changeAmount">
+		{{ changeAmount | price: currency }} ({{ changePercent | number: '0.1-1' }}%)
+	</ng-container>
+	<ng-container *ngIf="!changeAmount">{{ (changePercent / 100 | percent: '0.1-1') || defaultDisplay }}</ng-container>
+	{{ affix }}
+</span>

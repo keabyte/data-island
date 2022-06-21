@@ -2,37 +2,71 @@
 	<div class="text-2xl font-semibold pb-4">Cryptocurrency Dashboard</div>
 	<mat-table [dataSource]="dataSource">
 		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-		<mat-row *matRowDef="let coin; columns: displayedColumns"></mat-row>
+		<mat-row *matRowDef="let coin; columns: displayedColumns" class="table-row-highlight font-semibold"></mat-row>
 
 		<ng-container matColumnDef="market_cap_rank">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef class="coin-name-column">
 				<span>COIN</span>
 			</mat-header-cell>
-			<mat-cell *matCellDef="let coin">
-				<span class="mr-5 text-gray-500 font-semibold">{{ coin.market_cap_rank }}</span>
+			<mat-cell *matCellDef="let coin" class="coin-name-column">
+				<span class="mr-5 text-gray-500">{{ coin.market_cap_rank }}</span>
 				<img src="{{ coin.image }}" class="w-8 mr-3" />
-				<span class="font-semibold">
-					<span class="mr-2">{{ coin.name }}</span>
-					<span class="text-gray-400">{{ coin.symbol.toUpperCase() }}</span>
-				</span>
+				<span class="mr-2">{{ coin.name }}</span>
+				<span class="text-gray-400">{{ coin.symbol.toUpperCase() }}</span>
 			</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="current_price">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef class="column-right">
 				<span>PRICE</span>
 			</mat-header-cell>
-			<mat-cell *matCellDef="let coin">
-				<span class="font-semibold">{{ coin.current_price | currency }}</span>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				{{ coin.current_price | price }}
 			</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="market_cap">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef class="column-right">
 				<span>MARKET CAP</span>
 			</mat-header-cell>
-			<mat-cell *matCellDef="let coin">
-				<span class="font-semibold">{{ coin.market_cap | currency }}</span>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				{{ coin.market_cap | shortCurrency }}
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="total_volume">
+			<mat-header-cell *matHeaderCellDef class="column-right">
+				<span>VOLUME (24H)</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				{{ coin.total_volume | shortCurrency }}
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price_change_percentage_1h_in_currency">
+			<mat-header-cell *matHeaderCellDef class="column-right">
+				<span>1H %</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				<dil-amount-change [changePercent]="coin.price_change_percentage_1h_in_currency"></dil-amount-change>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price_change_percentage_24h_in_currency">
+			<mat-header-cell *matHeaderCellDef class="column-right">
+				<span>24H %</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				<dil-amount-change [changePercent]="coin.price_change_percentage_24h_in_currency"></dil-amount-change>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price_change_percentage_7d_in_currency">
+			<mat-header-cell *matHeaderCellDef class="column-right">
+				<span>7D %</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let coin" class="column-right">
+				<dil-amount-change [changePercent]="coin.price_change_percentage_7d_in_currency"></dil-amount-change>
 			</mat-cell>
 		</ng-container>
 	</mat-table>

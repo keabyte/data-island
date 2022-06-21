@@ -16,7 +16,15 @@ export class CoinDashboardComponent implements OnInit {
 		this.loadCoins();
 	}
 
-	displayedColumns = ['market_cap_rank', 'current_price', 'market_cap'];
+	displayedColumns = [
+		'market_cap_rank',
+		'current_price',
+		'price_change_percentage_1h_in_currency',
+		'price_change_percentage_24h_in_currency',
+		'price_change_percentage_7d_in_currency',
+		'market_cap',
+		'total_volume'
+	];
 
 	loadCoins() {
 		this.coinService.getCoins().subscribe(coins => {

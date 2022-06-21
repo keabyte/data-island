@@ -1,3 +1,11 @@
 .mat-row {
 	padding: 0.4rem 0;
 }
+
+.column-right {
+	justify-content: end;
+}
+
+.coin-name-column {
+	flex: 0 0 30%;
+}

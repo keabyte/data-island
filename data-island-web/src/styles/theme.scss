@@ -1,7 +1,3 @@
-@use '@angular/material' as mat;
-@import '@angular/material/theming';
-@include mat.core();
-
 $primary: mat.define-palette(mat.$blue-palette);
 $accent: mat.define-palette(mat.$light-blue-palette);
 $warn: mat.define-palette(mat.$deep-orange-palette);
@@ -16,4 +12,28 @@ $typography: mat.define-typography-config(
 
 .font-light {
 	font-family: 'Inter', sans-serif;
+}
+
+.wave-background {
+	background: linear-gradient(-45deg, rgb(2, 60, 185), rgb(63, 122, 250), rgb(2, 60, 185), rgb(63, 122, 250));
+	background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.table-row-highlight:hover {
+	background: #eff3f7;
+	transition: ease 0.3s;
+	cursor: pointer;
 }
