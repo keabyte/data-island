@@ -10,11 +10,7 @@ import { CoinGeckoService, CoinMarket } from 'src/app/shared/services/coin-gecko
 export class CoinDashboardComponent implements OnInit {
 	dataSource: MatTableDataSource<CoinMarket> = new MatTableDataSource<CoinMarket>();
 
-	constructor(private coinService: CoinGeckoService) {}
-
-	ngOnInit(): void {
-		this.loadCoins();
-	}
+	selectedCoin!: CoinMarket | null;
 
 	displayedColumns = [
 		'market_cap_rank',
@@ -26,9 +22,23 @@ export class CoinDashboardComponent implements OnInit {
 		'total_volume'
 	];
 
+	constructor(private coinService: CoinGeckoService) {}
+
+	ngOnInit(): void {
+		this.loadCoins();
+	}
+
 	loadCoins() {
 		this.coinService.getCoins().subscribe(coins => {
 			this.dataSource = new MatTableDataSource<CoinMarket>(coins);
 		});
+	}
+
+	rowClicked(coin: CoinMarket) {
+		if (this.selectedCoin && this.selectedCoin.id === coin.id) {
+			this.selectedCoin = null;
+		} else {
+			this.selectedCoin = coin;
+		}
 	}
 }
