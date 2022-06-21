@@ -1,6 +1,12 @@
 <ng-container *ngIf="coin">
-	<div class="bg-gray-100 p-4">
-		<img src="{{ coin.image }}" class="w-16 inline-block mr-2" />
-		<span class="text-3xl font-semibold">{{ coin.name }}</span>
+	<div class="bg-gray-100 p-4 flex">
+		<div class="px-2">
+			<img src="{{ coin.image }}" class="w-16 inline-block mr-2" />
+		</div>
+
+		<div class="pt-3">
+			<span class="text-3xl font-semibold mr-4">{{ coin.name }}</span>
+			<span class="text-2xl font-medium">{{ coin.current_price | price }}</span>
+		</div>
 	</div>
 </ng-container>
