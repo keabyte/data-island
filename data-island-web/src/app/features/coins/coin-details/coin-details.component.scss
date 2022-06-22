@@ -1,0 +1,15 @@
+.coin-stat-column {
+	@apply text-center;
+}
+
+.coin-stat-label {
+	@apply font-medium text-gray-500;
+}
+
+.coin-stat-value {
+	@apply font-medium text-2xl block;
+}
+
+.row-spacer {
+	@apply mb-7;
+}

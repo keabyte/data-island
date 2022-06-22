@@ -1,0 +1,17 @@
+<div class="grid grid-cols-3">
+	<div class="text-center col-start-2 col-span-1 pt-1">
+		<ng-content selected="title"></ng-content>
+	</div>
+	<div class="text-end col-span-1">
+		<mat-button-toggle-group appearance="legacy" [(ngModel)]="retrieveDays" (change)="retrieveDaysChanged()">
+			<mat-button-toggle [value]="1">1D</mat-button-toggle>
+			<mat-button-toggle [value]="7">7D</mat-button-toggle>
+			<mat-button-toggle [value]="30">30D</mat-button-toggle>
+			<mat-button-toggle [value]="365">1Y</mat-button-toggle>
+			<mat-button-toggle [value]="'max'">MAX</mat-button-toggle>
+		</mat-button-toggle-group>
+	</div>
+</div>
+<div>
+	<div echarts [options]="chartOption" [autoResize]="true"></div>
+</div>

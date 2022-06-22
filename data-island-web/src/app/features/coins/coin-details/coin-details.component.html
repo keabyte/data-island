@@ -1,12 +1,87 @@
 <ng-container *ngIf="coin">
-	<div class="bg-gray-100 p-4 flex">
-		<div class="px-2">
+	<!-- Header -->
+	<div class="bg-gray-100 p-5 flex row-spacer">
+		<div class="px-2 pr-6">
 			<img src="{{ coin.image }}" class="w-16 inline-block mr-2" />
 		</div>
 
-		<div class="pt-3">
-			<span class="text-3xl font-semibold mr-4">{{ coin.name }}</span>
+		<div>
+			<span class="text-3xl font-semibold">{{ coin.name }}</span>
+			<br />
+			Price
 			<span class="text-2xl font-medium">{{ coin.current_price | price }}</span>
 		</div>
+
+		<div class="pt-3 flex-1 text-end">
+			<button mat-mini-fab color="none" (click)="closeClicked.emit()" matTooltip="Close">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	<!-- Overview -->
+	<div class="px-5 row-spacer">
+		<div class="row-spacer">
+			<span class="font-medium text-2xl">Overview</span>
+			<hr class="divider-small" />
+		</div>
+		<div class="columns-3 row-spacer">
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					<dil-amount-change
+						[changePercent]="coin.price_change_percentage_1h_in_currency"
+					></dil-amount-change>
+				</span>
+				<span class="coin-stat-label">1H % CHANGE</span>
+			</div>
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					<dil-amount-change
+						[changePercent]="coin.price_change_percentage_24h_in_currency"
+					></dil-amount-change>
+				</span>
+				<span class="coin-stat-label">24H % CHANGE</span>
+			</div>
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					<dil-amount-change
+						[changePercent]="coin.price_change_percentage_7d_in_currency"
+					></dil-amount-change>
+				</span>
+				<span class="coin-stat-label">7D % CHANGE</span>
+			</div>
+		</div>
+
+		<div class="columns-3">
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					{{ coin.low_24h | price }}
+				</span>
+				<span class="coin-stat-label">24H LOW</span>
+			</div>
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					{{ coin.high_24h | price }}
+				</span>
+				<span class="coin-stat-label">24H HIGH</span>
+			</div>
+			<div class="coin-stat-column">
+				<span class="coin-stat-value">
+					{{ coin.market_cap | shortCurrency }}
+				</span>
+				<span class="coin-stat-label">MARKET CAP</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Overview -->
+	<div class="px-5">
+		<div class="row-spacer">
+			<span class="font-medium text-2xl">Price History</span>
+			<hr class="divider-small" />
+		</div>
+		<dil-coin-price-history-chart [coinId]="coin.id">
+			<span class="text-lg">{{ coin.symbol.toUpperCase() }} to USD Chart</span>
+		</dil-coin-price-history-chart>
 	</div>
 </ng-container>

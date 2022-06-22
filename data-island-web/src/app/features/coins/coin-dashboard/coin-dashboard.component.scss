@@ -14,3 +14,13 @@
 	position: fixed;
 	width: 40%;
 }
+
+.table-row-highlight:hover {
+	.coin-name {
+		text-decoration: underline;
+	}
+}
+
+.mat-row.table-row-selected {
+	border-left: 10px solid rgb(177, 183, 194);
+}

@@ -1,7 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
+/**
+ * CoinGecko API v3 https://www.coingecko.com/en/api/documentation
+ */
 @Injectable({
 	providedIn: 'root'
 })
@@ -27,6 +30,20 @@ export class CoinGeckoService {
 				.set('sparkline', false)
 		});
 	}
+
+	getCoinPriceHistory(id: string, days: number | 'max'): Observable<PricePoint[]> {
+		return this.http
+			.get<ChartData>(`${this.API_URL}/coins/${id}/market_chart`, {
+				params: new HttpParams().set('vs_currency', 'USD').set('days', days)
+			})
+			.pipe(
+				map(data =>
+					data.prices.map((p: any) => {
+						return { date: new Date(p[0]), price: p[1] } as PricePoint;
+					})
+				)
+			);
+	}
 }
 
 export interface CoinMarket {
@@ -43,6 +60,8 @@ export interface CoinMarket {
 	price_change_percentage_1h_in_currency: number;
 	price_change_percentage_24h_in_currency: number;
 	price_change_percentage_7d_in_currency: number;
+	high_24h: number;
+	low_24h: number;
 }
 
 export interface CoinDetails {
@@ -54,4 +73,13 @@ export interface CoinDetails {
 
 export interface MarketData {
 	current_price: { [key: string]: number };
+}
+
+export interface PricePoint {
+	date: Date;
+	price: number;
+}
+
+export interface ChartData {
+	prices: [number, number];
 }

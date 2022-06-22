@@ -32,7 +32,8 @@ $typography: mat.define-typography-config(
 	}
 }
 
-.table-row-highlight:hover {
+.table-row-highlight:hover,
+.table-row-selected {
 	background: #eff3f7;
 	transition: ease 0.3s;
 	cursor: pointer;

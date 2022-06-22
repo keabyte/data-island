@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CoinGeckoService, CoinMarket } from 'src/app/shared/services/coin-gecko.service';
 
 @Component({
@@ -8,6 +8,8 @@ import { CoinGeckoService, CoinMarket } from 'src/app/shared/services/coin-gecko
 })
 export class CoinDetailsComponent implements OnChanges {
 	@Input() coin: CoinMarket;
+
+	@Output() closeClicked = new EventEmitter();
 
 	constructor(private coinService: CoinGeckoService) {}
 

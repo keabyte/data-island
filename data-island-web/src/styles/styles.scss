@@ -2,6 +2,7 @@
 @import '@angular/material/theming';
 @include mat.core();
 @import './theme.scss';
+@import './scrollbar.scss';
 
 @tailwind base;
 @tailwind components;
@@ -23,4 +24,8 @@ body {
 .mat-icon {
 	display: inline;
 	vertical-align: middle;
+}
+
+.mat-tooltip {
+	font-size: inherit;
 }
