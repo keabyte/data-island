@@ -14,4 +14,6 @@
 </div>
 <div>
 	<div echarts [options]="chartOption" [autoResize]="true"></div>
+	<dil-loading-indicator [show]="loading && !chartOption" [format]="'spinner'"></dil-loading-indicator>
+	<dil-loading-indicator [show]="loading && !!chartOption"></dil-loading-indicator>
 </div>

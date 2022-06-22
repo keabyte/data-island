@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-12">
+		<div class="loading-wrapper">
+			<ng-container *ngIf="show">
+				<mat-spinner *ngIf="format === 'spinner'" [diameter]="diameter"></mat-spinner>
+				<mat-progress-bar mode="indeterminate" *ngIf="format === 'bar'"></mat-progress-bar>
+			</ng-container>
+		</div>
+	</div>
+</div>
