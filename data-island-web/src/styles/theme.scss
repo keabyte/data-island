@@ -38,3 +38,7 @@ $typography: mat.define-typography-config(
 	transition: ease 0.3s;
 	cursor: pointer;
 }
+
+.mat-drawer-container {
+	background-color: transparent;
+}

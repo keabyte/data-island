@@ -1,10 +1,10 @@
 <mat-drawer-container autosize [hasBackdrop]="false">
-	<mat-drawer mode="over" [opened]="!!selectedCoin" position="end" [autoFocus]="false">
+	<mat-drawer mode="over" [opened]="!!selectedCoin" position="end" [autoFocus]="false" class="w-full sm:w-5/12">
 		<dil-coin-details [coin]="selectedCoin" (closeClicked)="selectedCoin = null"></dil-coin-details>
 	</mat-drawer>
 
 	<mat-drawer-content>
-		<div>
+		<div class="px-6 sm:px-0">
 			<div class="text-2xl font-semibold pb-4">Cryptocurrency Dashboard</div>
 			<mat-table [dataSource]="dataSource">
 				<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
@@ -37,28 +37,28 @@
 				</ng-container>
 
 				<ng-container matColumnDef="market_cap">
-					<mat-header-cell *matHeaderCellDef class="column-right">
+					<mat-header-cell *matHeaderCellDef class="column-right hidden sm:flex">
 						<span>MARKET CAP</span>
 					</mat-header-cell>
-					<mat-cell *matCellDef="let coin" class="column-right">
+					<mat-cell *matCellDef="let coin" class="column-right hidden sm:flex">
 						{{ coin.market_cap | shortCurrency }}
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="total_volume">
-					<mat-header-cell *matHeaderCellDef class="column-right">
+					<mat-header-cell *matHeaderCellDef class="column-right hidden sm:flex">
 						<span>VOLUME (24H)</span>
 					</mat-header-cell>
-					<mat-cell *matCellDef="let coin" class="column-right">
+					<mat-cell *matCellDef="let coin" class="column-right hidden sm:flex">
 						{{ coin.total_volume | shortCurrency }}
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="price_change_percentage_1h_in_currency">
-					<mat-header-cell *matHeaderCellDef class="column-right">
+					<mat-header-cell *matHeaderCellDef class="column-right hidden sm:flex">
 						<span>1H %</span>
 					</mat-header-cell>
-					<mat-cell *matCellDef="let coin" class="column-right">
+					<mat-cell *matCellDef="let coin" class="column-right hidden sm:flex">
 						<dil-amount-change
 							[changePercent]="coin.price_change_percentage_1h_in_currency"
 						></dil-amount-change>
@@ -77,10 +77,10 @@
 				</ng-container>
 
 				<ng-container matColumnDef="price_change_percentage_7d_in_currency">
-					<mat-header-cell *matHeaderCellDef class="column-right">
+					<mat-header-cell *matHeaderCellDef class="column-right hidden sm:flex">
 						<span>7D %</span>
 					</mat-header-cell>
-					<mat-cell *matCellDef="let coin" class="column-right">
+					<mat-cell *matCellDef="let coin" class="column-right hidden sm:flex">
 						<dil-amount-change
 							[changePercent]="coin.price_change_percentage_7d_in_currency"
 						></dil-amount-change>

@@ -25,7 +25,7 @@
 			<span class="font-medium text-2xl">Overview</span>
 			<hr class="divider-small" />
 		</div>
-		<div class="columns-3 row-spacer">
+		<div class="grid grid-cols-2 sm:grid-cols-3 row-spacer">
 			<div class="coin-stat-column">
 				<span class="coin-stat-value">
 					<dil-amount-change
@@ -34,7 +34,7 @@
 				</span>
 				<span class="coin-stat-label">1H % CHANGE</span>
 			</div>
-			<div class="coin-stat-column">
+			<div class="coin-stat-column mb-7 sm:mb-0">
 				<span class="coin-stat-value">
 					<dil-amount-change
 						[changePercent]="coin.price_change_percentage_24h_in_currency"
@@ -42,7 +42,7 @@
 				</span>
 				<span class="coin-stat-label">24H % CHANGE</span>
 			</div>
-			<div class="coin-stat-column">
+			<div class="coin-stat-column sm:mb-7">
 				<span class="coin-stat-value">
 					<dil-amount-change
 						[changePercent]="coin.price_change_percentage_7d_in_currency"
@@ -50,10 +50,7 @@
 				</span>
 				<span class="coin-stat-label">7D % CHANGE</span>
 			</div>
-		</div>
-
-		<div class="columns-3">
-			<div class="coin-stat-column">
+			<div class="coin-stat-column mb-7 sm:mb-0">
 				<span class="coin-stat-value">
 					{{ coin.low_24h | price }}
 				</span>
