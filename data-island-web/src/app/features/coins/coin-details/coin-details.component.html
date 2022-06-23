@@ -71,8 +71,8 @@
 		</div>
 	</div>
 
-	<!-- Overview -->
-	<div class="px-5">
+	<!-- Price History -->
+	<div class="px-5 row-spacer">
 		<div class="row-spacer">
 			<span class="font-medium text-2xl">Price History</span>
 			<hr class="divider-small" />
@@ -80,5 +80,72 @@
 		<dil-coin-price-history-chart [coinId]="coin.id">
 			<span class="text-lg">{{ coin.symbol.toUpperCase() }} to USD Chart</span>
 		</dil-coin-price-history-chart>
+	</div>
+
+	<!-- Supply -->
+	<div class="px-5 row-spacer">
+		<div class="row-spacer">
+			<span class="font-medium text-2xl">Supply</span>
+			<hr class="divider-small" />
+		</div>
+		<div class="flex row-spacer">
+			<div class="coin-stat-column flex-1">
+				<span class="coin-stat-value">
+					{{ coin.circulating_supply | number: '1.0-0' }}
+					<span class="text-gray-400 text-base" *ngIf="!!coin.max_supply">
+						({{ coin.circulating_supply / coin.max_supply | percent }})
+					</span>
+				</span>
+				<span class="coin-stat-label">CIRCULATING SUPPLY</span>
+			</div>
+
+			<div class="coin-stat-column flex-1" *ngIf="!!coin.max_supply">
+				<span class="coin-stat-value">
+					{{ coin.max_supply - coin.circulating_supply | number: '1.0-0' }}
+					<span class="text-gray-400 text-base">
+						({{ (coin.max_supply - coin.circulating_supply) / coin.max_supply | percent }})
+					</span>
+				</span>
+
+				<span class="coin-stat-label">UNALLOCATED SUPPLY</span>
+			</div>
+
+			<div class="coin-stat-column flex-1">
+				<span class="coin-stat-value">
+					<ng-container *ngIf="!!coin.max_supply; else unlimited">
+						{{ coin.max_supply | number: '1.0-0' }}
+					</ng-container>
+					<ng-template #unlimited>Unlimited</ng-template>
+				</span>
+				<span class="coin-stat-label">TOTAL SUPPLY</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Description -->
+	<div class="px-5 row-spacer" *ngIf="coinDetails">
+		<div class="row-spacer">
+			<span class="font-medium text-2xl">Description</span>
+			<hr class="divider-small" />
+		</div>
+		<div class="flex row-spacer">
+			<div class="fs-6" [innerHTML]="(coinDetails.description.en | description) || 'No description'"></div>
+		</div>
+	</div>
+
+	<!-- Resources -->
+	<div class="px-5 row-spacer" *ngIf="coinDetails">
+		<div class="row-spacer">
+			<span class="font-medium text-2xl">Resources</span>
+			<hr class="divider-small" />
+		</div>
+		<div class="row-spacer">
+			<p *ngFor="let link of coinDetails.links?.homepage">
+				<a href="{{ link }}" target="_blank" class="underline">{{ link }}</a>
+			</p>
+			<p *ngFor="let link of coinDetails.links?.repos_url?.github">
+				<a href="{{ link }}" target="_blank" class="underline">{{ link }}</a>
+			</p>
+		</div>
 	</div>
 </ng-container>

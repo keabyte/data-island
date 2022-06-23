@@ -54,14 +54,15 @@ export interface CoinMarket {
 	current_price: number;
 	market_cap: number;
 	market_cap_rank: number;
-	total_supply: number;
-	max_supply: number;
 	total_volume: number;
 	price_change_percentage_1h_in_currency: number;
 	price_change_percentage_24h_in_currency: number;
 	price_change_percentage_7d_in_currency: number;
 	high_24h: number;
 	low_24h: number;
+	circulating_supply: number;
+	max_supply: number;
+	description: number;
 }
 
 export interface CoinDetails {
@@ -69,6 +70,8 @@ export interface CoinDetails {
 	symbol: string;
 	name: string;
 	market_data: MarketData;
+	description: { en: string };
+	links: { homepage: string[]; repos_url: { github: string[] } };
 }
 
 export interface MarketData {
