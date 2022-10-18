@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { CoinGeckoService, CoinMarket } from 'src/app/shared/services/coin-gecko.service';
 
 @Component({
@@ -9,13 +10,13 @@ import { CoinGeckoService, CoinMarket } from 'src/app/shared/services/coin-gecko
 })
 export class CoinDashboardComponent implements OnInit {
 	dataSource: MatTableDataSource<CoinMarket> = new MatTableDataSource<CoinMarket>();
-
-	selectedCoin!: CoinMarket | null;
+	selectedCoin: CoinMarket | null;
+	page: number = 1;
+	loadingMore$: Subscription;
 
 	displayedColumns = [
 		'market_cap_rank',
 		'current_price',
-		'price_change_percentage_1h_in_currency',
 		'price_change_percentage_24h_in_currency',
 		'price_change_percentage_7d_in_currency',
 		'market_cap',
@@ -29,7 +30,7 @@ export class CoinDashboardComponent implements OnInit {
 	}
 
 	loadCoins() {
-		this.coinService.getCoins().subscribe(coins => {
+		this.coinService.getCoins(this.page).subscribe(coins => {
 			this.dataSource = new MatTableDataSource<CoinMarket>(coins);
 		});
 	}
@@ -40,5 +41,17 @@ export class CoinDashboardComponent implements OnInit {
 		} else {
 			this.selectedCoin = coin;
 		}
+	}
+
+	loadMore() {
+		this.page++;
+		this.loadingMore$ = this.coinService.getCoins(this.page).subscribe(coins => {
+			let data = this.dataSource.data.concat(coins);
+			this.dataSource.data = data;
+		});
+	}
+
+	get loadingMore(): boolean {
+		return this.loadingMore$ && !this.loadingMore$.closed;
 	}
 }

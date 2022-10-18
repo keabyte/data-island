@@ -13,9 +13,12 @@ export class CoinGeckoService {
 
 	constructor(private http: HttpClient) {}
 
-	getCoins(): Observable<CoinMarket[]> {
+	getCoins(page: number = 1): Observable<CoinMarket[]> {
 		return this.http.get<CoinMarket[]>(`${this.API_URL}/coins/markets`, {
-			params: new HttpParams().set('vs_currency', 'USD').set('price_change_percentage', '1h,24h,7d')
+			params: new HttpParams()
+				.set('vs_currency', 'USD')
+				.set('price_change_percentage', '1h,24h,7d')
+				.set('page', page)
 		});
 	}
 

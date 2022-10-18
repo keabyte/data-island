@@ -54,17 +54,6 @@
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="price_change_percentage_1h_in_currency">
-					<mat-header-cell *matHeaderCellDef class="column-right hidden sm:flex">
-						<span>1H %</span>
-					</mat-header-cell>
-					<mat-cell *matCellDef="let coin" class="column-right hidden sm:flex">
-						<dil-amount-change
-							[changePercent]="coin.price_change_percentage_1h_in_currency"
-						></dil-amount-change>
-					</mat-cell>
-				</ng-container>
-
 				<ng-container matColumnDef="price_change_percentage_24h_in_currency">
 					<mat-header-cell *matHeaderCellDef class="column-right">
 						<span>24H %</span>
@@ -87,6 +76,9 @@
 					</mat-cell>
 				</ng-container>
 			</mat-table>
+		</div>
+		<div class="flex justify-center py-3">
+			<button mat-stroked-button color="primary" (click)="loadMore()">Load more</button>
 		</div>
 	</mat-drawer-content>
 </mat-drawer-container>
