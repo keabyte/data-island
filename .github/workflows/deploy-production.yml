@@ -10,15 +10,12 @@ jobs:
         uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
           command: cp
-          source: s3://${{ secrets.AWS_S3_BUCKET }}/
+          source: s3://${{ secrets.AWS_S3_BUCKET_STAGING }}/
           destination: data-island-web-dist
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ap-southeast-2
-          flags: --recursive 
-
-      - name: Debug
-        run: ls
+          flags: --recursive
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
