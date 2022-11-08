@@ -1,7 +1,9 @@
 name: main
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - staging
   workflow_dispatch:
 jobs:
   web:
@@ -18,7 +20,13 @@ jobs:
       - name: Build application
         run: npm run build:prod
 
-      - name: Deploy to S3
+      - uses: actions/upload-artifact@v3
+        with:
+          name: data-island-web
+          path: dist/data-island-web/
+
+      - name: Deploy to S3 (prod)
+        if: github.ref == 'refs/heads/main'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
@@ -28,7 +36,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: "./data-island-web/dist/data-island-web"
 
-      - name: Invalidate Cloudfront cache
+      - name: Invalidate Cloudfront cache (prod)
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
@@ -36,3 +44,14 @@ jobs:
           AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Deploy to S3 (staging)
+        if: github.ref == 'refs/heads/staging'
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STAGING }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: "./data-island-web/dist/data-island-web"

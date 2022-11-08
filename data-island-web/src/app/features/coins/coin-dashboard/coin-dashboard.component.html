@@ -1,5 +1,5 @@
 <mat-drawer-container autosize [hasBackdrop]="false">
-	<mat-drawer mode="over" [opened]="!!selectedCoin" position="end" [autoFocus]="false" class="w-full sm:w-5/12">
+	<mat-drawer mode="over" [opened]="!!selectedCoin" position="end" [autoFocus]="false" class="w-full sm:w-6/12">
 		<dil-coin-details [coin]="selectedCoin" (closeClicked)="selectedCoin = null"></dil-coin-details>
 	</mat-drawer>
 
