@@ -8,6 +8,7 @@
 		"build:prod": "ng build --configuration production",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
+		"test:cicd": "ng test --browsers=ChromiumHeadlessCI --watch=false",
 		"format": "npx prettier --write ."
 	},
 	"private": true,
