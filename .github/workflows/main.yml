@@ -20,6 +20,9 @@ jobs:
       - name: Build application
         run: npm run build:prod
 
+      - name: Run tests
+        run: npm run test
+
       - uses: actions/upload-artifact@v3
         with:
           name: data-island-web
