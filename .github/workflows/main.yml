@@ -28,7 +28,7 @@ jobs:
       run:
         working-directory: ./data-island-web
     steps:
-      -- name: Deploy to S3
+      - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
