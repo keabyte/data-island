@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: data-island-web
+          name: data-island-web-dist
           path: data-island-web/dist/data-island-web/
 
   web-deploy:
@@ -34,7 +34,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: data-island-web
+          name: data-island-web-dist
+          path: data-island-web-dist
 
       - name: Deploy to S3 (prod)
         if: github.ref == 'refs/heads/main'
@@ -45,7 +46,7 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: "data-island-web"
+          SOURCE_DIR: data-island-web-dist
 
       - name: Invalidate Cloudfront cache (prod)
         if: github.ref == 'refs/heads/main'
@@ -66,4 +67,4 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STAGING }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: "data-island-web"
+          SOURCE_DIR: data-island-web-dist
