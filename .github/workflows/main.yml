@@ -1,10 +1,12 @@
 name: main
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - staging
   workflow_dispatch:
 jobs:
-  web:
+  web-build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -18,7 +20,15 @@ jobs:
       - name: Build application
         run: npm run build:prod
 
-      - name: Deploy to S3
+  web-deploy-main:
+    needs: web-build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data-island-web
+    steps:
+      -- name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
@@ -36,3 +46,21 @@ jobs:
           AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  web-deploy-staging:
+    needs: web-build
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data-island-web
+    steps:
+      -- name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STAGING }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: "./data-island-web/dist/data-island-web"
