@@ -34,7 +34,17 @@ module.exports = function (config) {
 		colors: true,
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
-		browsers: ['Chrome'],
+		browsers: ['ChromeDebugging'],
+		customLaunchers: {
+			ChromiumHeadlessCI: {
+				base: 'ChromiumHeadless',
+				flags: ['--no-sandbox']
+			},
+			ChromeDebugging: {
+				base: 'Chrome',
+				flags: ['--remote-debugging-port=9333', '--incognito']
+			}
+		},
 		singleRun: false,
 		restartOnFileChange: true
 	});

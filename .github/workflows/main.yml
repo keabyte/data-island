@@ -21,12 +21,12 @@ jobs:
         run: npm run build:prod
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:cicd
 
       - uses: actions/upload-artifact@v3
         with:
           name: data-island-web
-          path: dist/data-island-web/
+          path: ./data-island-web/dist/data-island-web'
 
       - name: Deploy to S3 (prod)
         if: github.ref == 'refs/heads/main'
