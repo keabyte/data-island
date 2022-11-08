@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - staging
 jobs:
   web-build:
     runs-on: ubuntu-latest
@@ -27,37 +26,7 @@ jobs:
           name: data-island-web-dist
           path: data-island-web/dist/data-island-web/
 
-  web-deploy-prod:
-    if: github.ref == 'refs/heads/main'
-    needs: web-build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: data-island-web-dist
-          path: data-island-web-dist
-
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: data-island-web-dist
-
-      - name: Invalidate Cloudfront cache
-        uses: chetan/invalidate-cloudfront-action@v2
-        env:
-          DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
-          PATHS: "/*"
-          AWS_REGION: "us-east-1"
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
   web-deploy-staging:
-    if: github.ref == 'refs/heads/staging'
     needs: web-build
     runs-on: ubuntu-latest
     steps:
