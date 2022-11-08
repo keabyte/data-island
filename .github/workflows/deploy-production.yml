@@ -11,10 +11,13 @@ jobs:
         with:
           command: cp
           source: s3://${{ secrets.AWS_S3_BUCKET }}
-          destination: ./data-island-web-dist/
+          destination: data-island-web-dist
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ap-southeast-2
+
+      - name: Debug
+        run: ls
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
