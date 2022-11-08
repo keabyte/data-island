@@ -6,7 +6,7 @@ on:
       - staging
   workflow_dispatch:
 jobs:
-  web-build:
+  web:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -20,15 +20,13 @@ jobs:
       - name: Build application
         run: npm run build:prod
 
-  web-deploy-main:
-    needs: web-build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./data-island-web
-    steps:
-      - name: Deploy to S3
+      - uses: actions/upload-artifact@v3
+        with:
+          name: data-island-web
+          path: dist/data-island-web/
+
+      - name: Deploy to S3 (prod)
+        if: github.ref == 'refs/heads/main'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
@@ -38,7 +36,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: "./data-island-web/dist/data-island-web"
 
-      - name: Invalidate Cloudfront cache
+      - name: Invalidate Cloudfront cache (prod)
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
@@ -47,15 +45,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  web-deploy-staging:
-    needs: web-build
-    if: github.ref == 'refs/heads/staging'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./data-island-web
-    steps:
-      - name: Deploy to S3
+      - name: Deploy to S3 (staging)
+        if: github.ref == 'refs/heads/staging'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
