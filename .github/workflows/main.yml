@@ -26,7 +26,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: data-island-web
-          path: ./data-island-web/dist/data-island-web'
+          path: data-island-web/dist/data-island-web/
 
       - name: Deploy to S3 (prod)
         if: github.ref == 'refs/heads/main'
@@ -40,6 +40,7 @@ jobs:
           SOURCE_DIR: "./data-island-web/dist/data-island-web"
 
       - name: Invalidate Cloudfront cache (prod)
+        if: github.ref == 'refs/heads/main'
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
