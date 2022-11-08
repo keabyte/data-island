@@ -4,7 +4,6 @@ on:
 jobs:
   web-deploy:
     if: github.ref == 'refs/heads/main'
-    needs: web-build
     runs-on: ubuntu-latest
     steps:
       - name: Download staging files
