@@ -6,16 +6,15 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - name: Download staging files
-        uses: keithweaver/aws-s3-github-action@v1.0.0
+      - name: Download staging artifacts
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
         with:
-          command: cp
-          source: s3://${{ secrets.AWS_S3_BUCKET_STAGING }}/
-          destination: data-island-web-dist
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ap-southeast-2
-          flags: --recursive
+          github_token: ${{secrets.TOKEN_GITHUB_ARTIFACT_READ}}
+          workflow: main.yml
+          name: data-island-web-dist
+          path: data-island-web-dist
+          workflow_conclusion: success
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
