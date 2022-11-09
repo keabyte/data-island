@@ -1,4 +1,4 @@
-name: deploy-staging
+name: feature-branch
 on:
   push:
     branches:
@@ -18,6 +18,9 @@ jobs:
 
       - name: Build application
         run: npm run build:prod -- --base-href=/${{ github.ref_name }}/
+
+      - name: Run tests
+        run: npm run test:cicd
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
