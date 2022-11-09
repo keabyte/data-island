@@ -28,7 +28,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: data-island-web/dist/data-island-web/
-          DEST_DIR: "{{ github.ref_name }}"
+          DEST_DIR: ${{ github.ref_name }}
 
       - name: Logging
-        run: echo "{{ github.ref_name }}"
+        run: echo Deployed to http://staging.dataisland.io/${{ github.ref_name }}
