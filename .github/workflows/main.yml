@@ -22,6 +22,7 @@ jobs:
         run: npm run test:cicd
 
       - uses: actions/upload-artifact@v3
+        if: github.ref == 'refs/heads/main'
         with:
           name: data-island-web-dist
           path: data-island-web/dist/data-island-web/
