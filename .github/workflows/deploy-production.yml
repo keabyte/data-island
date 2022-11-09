@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   web-deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     environment: 
       name: production
