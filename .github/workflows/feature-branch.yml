@@ -7,6 +7,9 @@ on:
 jobs:
   web-build:
     runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: http://staging.dataisland.io/${{ github.ref_name }}
     defaults:
       run:
         working-directory: ./data-island-web
