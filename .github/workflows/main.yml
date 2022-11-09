@@ -29,6 +29,9 @@ jobs:
   web-deploy-staging:
     needs: web-build
     runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: http://staging.dataisland.io
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -40,7 +43,7 @@ jobs:
         with:
           args: --delete
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STAGING }}
+          AWS_S3_BUCKET: staging.dataisland.io
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: data-island-web-dist
