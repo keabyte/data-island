@@ -21,6 +21,12 @@ jobs:
       - name: Run tests
         run: npm run test:cicd
 
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GHUB_TOKEN }}
+
       - uses: actions/upload-artifact@v3
         with:
           name: data-island-web-dist

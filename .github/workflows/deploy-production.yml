@@ -13,7 +13,7 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{secrets.TOKEN_GITHUB_ARTIFACT_READ}}
+          github_token: ${{secrets.GHUB_TOKEN}}
           workflow: main.yml
           name: data-island-web-dist
           path: data-island-web-dist
