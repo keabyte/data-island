@@ -12,7 +12,7 @@ export class CoinDashboardComponent implements OnInit {
 	dataSource: MatTableDataSource<CoinMarket> = new MatTableDataSource<CoinMarket>();
 	selectedCoin: CoinMarket | null;
 	page: number = 1;
-	loadingMore$: Subscription;
+	loading$: Subscription;
 
 	displayedColumns = [
 		'market_cap_rank',
@@ -30,9 +30,11 @@ export class CoinDashboardComponent implements OnInit {
 	}
 
 	loadCoins() {
-		this.coinService.getCoins(this.page).subscribe(coins => {
-			this.dataSource = new MatTableDataSource<CoinMarket>(coins);
+		this.loading$ = this.coinService.getCoins(this.page).subscribe(coins => {
+			let data = this.dataSource.data.concat(coins);
+			this.dataSource.data = data;
 		});
+		this.page++;
 	}
 
 	rowClicked(coin: CoinMarket) {
@@ -43,15 +45,7 @@ export class CoinDashboardComponent implements OnInit {
 		}
 	}
 
-	loadMore() {
-		this.page++;
-		this.loadingMore$ = this.coinService.getCoins(this.page).subscribe(coins => {
-			let data = this.dataSource.data.concat(coins);
-			this.dataSource.data = data;
-		});
-	}
-
-	get loadingMore(): boolean {
-		return this.loadingMore$ && !this.loadingMore$.closed;
+	get loading(): boolean {
+		return this.loading$ && !this.loading$.closed;
 	}
 }

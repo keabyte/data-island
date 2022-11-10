@@ -76,9 +76,12 @@
 					</mat-cell>
 				</ng-container>
 			</mat-table>
+			<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 		</div>
 		<div class="flex justify-center py-3">
-			<button mat-stroked-button color="primary" (click)="loadMore()">Load more</button>
+			<button mat-stroked-button color="primary" (click)="loadCoins()" *ngIf="dataSource.data.length">
+				Load more
+			</button>
 		</div>
 	</mat-drawer-content>
 </mat-drawer-container>
