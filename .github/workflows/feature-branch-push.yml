@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set version
+        run: sed -i 's/{{VERSION}}/${{ github.ref_name }}/g' src/environments/environment.prod.ts
+
       - name: Install dependencies
         run: npm install
 
