@@ -1,11 +1,11 @@
 name: deploy-production
-on: 
+on:
   workflow_dispatch:
 jobs:
   web-deploy:
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: production
       url: https://dataisland.io
     steps:
@@ -14,7 +14,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GHUB_TOKEN}}
-          workflow: main.yml
+          workflow: main-push.yml
           name: data-island-web-dist
           path: data-island-web-dist
           workflow_conclusion: success
