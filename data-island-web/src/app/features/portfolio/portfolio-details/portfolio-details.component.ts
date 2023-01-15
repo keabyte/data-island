@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoinGeckoService } from 'src/app/shared/services/coin-gecko.service';
-import { AssetPricePoint, Portfolio } from '../portfolio-tracker/portfolio-tracker.component';
+import { AssetPricePoint, Portfolio } from 'src/app/shared/services/portfolio.service';
 
 @Component({
 	selector: 'dil-portfolio-details',

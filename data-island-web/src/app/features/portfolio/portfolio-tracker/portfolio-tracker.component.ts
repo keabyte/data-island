@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoinDetails } from 'src/app/shared/services/coin-gecko.service';
+import { Portfolio, PortfolioService } from 'src/app/shared/services/portfolio.service';
 
 @Component({
 	selector: 'dil-portfolio-tracker',
@@ -9,51 +9,18 @@ import { CoinDetails } from 'src/app/shared/services/coin-gecko.service';
 export class PortfolioTrackerComponent implements OnInit {
 	selectedPortfolio: Portfolio | null = null;
 
-	portfolios: Portfolio[] = [
-		{
-			name: 'Main',
-			order: 1,
-			totalValue: 1000,
-			createdDate: new Date(),
-			assets: [
-				{ id: 'bitcoin', units: 1.304 },
-				{ id: 'ethereum', units: 2.5 }
-			]
-		},
-		{
-			name: 'Alts',
-			order: 1,
-			totalValue: 1000,
-			createdDate: new Date(),
-			assets: [
-				{ id: 'algorand', units: 3001 },
-				{ id: 'cardano', units: 2000 }
-			]
-		}
-	];
+	portfolios: Portfolio[] = [];
 
-	constructor() {}
+	constructor(private portfolioService: PortfolioService) {}
 
 	ngOnInit(): void {
-		this.selectPortfolio(this.portfolios[0]);
+		this.portfolioService.getPortfolios().subscribe(portfolios => {
+			this.portfolios = portfolios.sort((a, b) => (a.order > b.order ? 1 : -1));
+			this.selectPortfolio(this.portfolios[0]);
+		});
 	}
 
 	selectPortfolio(portfolio: Portfolio) {
 		this.selectedPortfolio = portfolio;
 	}
 }
-
-export interface Portfolio {
-	name: string;
-	order: number;
-	totalValue: number;
-	createdDate: Date;
-	assets: Asset[];
-}
-
-export interface Asset {
-	id: string;
-	units: number;
-}
-
-export interface AssetPricePoint extends Asset, CoinDetails {}

@@ -1,7 +1,5 @@
-<div class="grid grid-cols-12 gap-4">
+<div class="grid grid-cols-12 gap-6">
 	<div class="col-span-3">
-		Portfolios
-
 		<ng-container *ngFor="let portfolio of portfolios">
 			<div
 				class="flex px-2 py-2 cursor-pointer hover:bg-gray-100 rounded w-full"
@@ -12,10 +10,14 @@
 					<mat-icon class="material-symbols-outlined">account_balance_wallet</mat-icon>
 				</div>
 
-				<div>
+				<div class="flex-1">
 					<span class="font-semibold">{{ portfolio.name }}</span>
 					<br />
 					<span class="text-gray-500">{{ portfolio.totalValue | currency }}</span>
+				</div>
+
+				<div *ngIf="selectedPortfolio.order === portfolio.order" class="pt-2">
+					<mat-icon>chevron_right</mat-icon>
 				</div>
 			</div>
 		</ng-container>
