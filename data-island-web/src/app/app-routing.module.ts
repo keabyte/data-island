@@ -8,6 +8,12 @@ const routes: Routes = [
 		pathMatch: 'full',
 		component: ClassicLayoutContainerComponent,
 		loadChildren: () => import('./features/coins/coins.module').then(m => m.CoinsModule)
+	},
+	{
+		path: 'portfolio',
+		pathMatch: 'full',
+		component: ClassicLayoutContainerComponent,
+		loadChildren: () => import('./features/portfolio/portfolio.module').then(m => m.PortfolioModule)
 	}
 ];
 

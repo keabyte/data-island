@@ -1,0 +1,45 @@
+<div class="col-span-9">
+	<h1>{{ portfolio.name }}</h1>
+	<h2>Price History</h2>
+	<h2>Assets</h2>
+	<mat-table [dataSource]="dataSource">
+		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+		<mat-row *matRowDef="let asset; columns: displayedColumns"></mat-row>
+
+		<ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef>
+				<span>Name</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<span>{{ asset.name }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price">
+			<mat-header-cell *matHeaderCellDef>
+				<span>Price</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<span>{{ asset.price }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="units">
+			<mat-header-cell *matHeaderCellDef>
+				<span>Holdings</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<span>{{ asset.units }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="amount">
+			<mat-header-cell *matHeaderCellDef>
+				<span>Amount</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<span>{{ asset.amount }}</span>
+			</mat-cell>
+		</ng-container>
+	</mat-table>
+</div>
