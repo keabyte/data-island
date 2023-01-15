@@ -1,16 +1,19 @@
 <div class="col-span-9">
-	<h1>{{ portfolio.name }}</h1>
-	<h2>Price History</h2>
+	<h1>
+		{{ portfolio.name }}
+		<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
+	</h1>
 	<h2>Assets</h2>
 	<mat-table [dataSource]="dataSource">
 		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-		<mat-row *matRowDef="let asset; columns: displayedColumns"></mat-row>
+		<mat-row *matRowDef="let asset; columns: displayedColumns" class="font-semibold"></mat-row>
 
 		<ng-container matColumnDef="name">
 			<mat-header-cell *matHeaderCellDef>
 				<span>Name</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
+				<img src="{{ asset.image.large }}" class="mr-2 w-8" />
 				<span>{{ asset.name }}</span>
 			</mat-cell>
 		</ng-container>
@@ -20,25 +23,31 @@
 				<span>Price</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
-				<span>{{ asset.price }}</span>
+				<span>{{ asset.market_data.current_price.usd | currency }}</span>
 			</mat-cell>
 		</ng-container>
 
-		<ng-container matColumnDef="units">
+		<ng-container matColumnDef="price_change_percentage">
+			<mat-header-cell *matHeaderCellDef>
+				<span>7D %</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<dil-amount-change [changePercent]="asset.market_data.price_change_percentage_7d"></dil-amount-change>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="holdings">
 			<mat-header-cell *matHeaderCellDef>
 				<span>Holdings</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
-				<span>{{ asset.units }}</span>
-			</mat-cell>
-		</ng-container>
-
-		<ng-container matColumnDef="amount">
-			<mat-header-cell *matHeaderCellDef>
-				<span>Amount</span>
-			</mat-header-cell>
-			<mat-cell *matCellDef="let asset">
-				<span>{{ asset.amount }}</span>
+				<div>
+					<span>{{ asset.units * asset.market_data.current_price.usd | currency }}</span>
+					<br />
+					<span class="text-gray-500">
+						{{ asset.units | number: '1.2-2' }} {{ asset.symbol.toUpperCase() }}
+					</span>
+				</div>
 			</mat-cell>
 		</ng-container>
 	</mat-table>

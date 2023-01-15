@@ -10,10 +10,11 @@ import { AssetPricePoint, Portfolio } from '../portfolio-tracker/portfolio-track
 })
 export class PortfolioDetailsComponent implements OnInit, OnChanges {
 	@Input() portfolio: Portfolio;
+	totalPortfolioValue: number = 0;
 
 	dataSource: MatTableDataSource<AssetPricePoint> = new MatTableDataSource<AssetPricePoint>();
 
-	displayedColumns = ['name', 'price', 'units', 'amount'];
+	displayedColumns = ['name', 'price', 'holdings', 'price_change_percentage'];
 
 	constructor(private coinService: CoinGeckoService) {}
 
@@ -24,11 +25,13 @@ export class PortfolioDetailsComponent implements OnInit, OnChanges {
 	ngOnInit(): void {}
 
 	loadAssetDetails() {
+		this.totalPortfolioValue = 0;
 		this.dataSource = new MatTableDataSource<AssetPricePoint>();
 		for (const asset of this.portfolio.assets) {
 			this.coinService.getCoinById(asset.id).subscribe(response => {
-				this.dataSource.data = [...this.dataSource.data, { ...response, ...asset }];
-				console.log(this.dataSource.data);
+				const pricePoint = { ...response, ...asset };
+				this.dataSource.data = [...this.dataSource.data, pricePoint];
+				this.totalPortfolioValue += pricePoint.units * pricePoint.market_data.current_price['usd'];
 			});
 		}
 	}
