@@ -19,21 +19,11 @@
 			<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
 		</div>
 		<div>
-			<button mat-icon-button>
-				<mat-icon
-					class="material-symbols-outlined text-gray-500"
-					matTooltip="Edit portfolio"
-					(click)="editPortfolio()"
-				>
-					edit
-				</mat-icon>
+			<button mat-icon-button (click)="editPortfolio()">
+				<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Edit portfolio">edit</mat-icon>
 			</button>
-			<button mat-icon-button>
-				<mat-icon
-					class="material-symbols-outlined text-gray-500"
-					matTooltip="Delete portfolio"
-					(click)="portfolioDeleted.emit(portfolio)"
-				>
+			<button mat-icon-button (click)="portfolioDeleted.emit(portfolio)">
+				<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Delete portfolio">
 					delete
 				</mat-icon>
 			</button>

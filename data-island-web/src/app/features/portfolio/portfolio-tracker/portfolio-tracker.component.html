@@ -1,8 +1,10 @@
+<h1>Portfolio Tracker</h1>
 <div class="grid grid-cols-12 gap-6">
 	<div class="col-span-3">
 		<ng-container *ngFor="let portfolio of portfolios">
 			<div
 				class="flex px-2 py-2 cursor-pointer hover:bg-gray-100 rounded w-full"
+				[ngClass]="{ 'selected-portfolio text-white': selectedPortfolio.order === portfolio.order }"
 				matRipple
 				(click)="selectPortfolio(portfolio)"
 			>
@@ -13,7 +15,9 @@
 				<div class="flex-1">
 					<span class="font-semibold">{{ portfolio.name }}</span>
 					<br />
-					<span class="text-gray-500">{{ portfolio.totalValue | currency }}</span>
+					<span [ngClass]="{ 'text-gray-500': selectedPortfolio.order !== portfolio.order }">
+						{{ portfolio.totalValue | currency }}
+					</span>
 				</div>
 
 				<div *ngIf="selectedPortfolio.order === portfolio.order" class="pt-2">
