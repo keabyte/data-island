@@ -4,7 +4,15 @@
 		<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
 	</h1>
 	<h2>Assets</h2>
-	<mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
+	<table
+		mat-table
+		[dataSource]="dataSource"
+		matSort
+		matSortActive="name"
+		matSortDirection="asc"
+		matSortDisableClear
+		class="w-full"
+	>
 		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 		<mat-row *matRowDef="let asset; columns: displayedColumns" class="font-semibold"></mat-row>
 
@@ -28,11 +36,27 @@
 		</ng-container>
 
 		<ng-container matColumnDef="price_change_percentage">
-			<mat-header-cell *matHeaderCellDef mat-sort-header>
+			<mat-header-cell *matHeaderCellDef>
 				<span>7D %</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
 				<dil-amount-change [changePercent]="asset.market_data.price_change_percentage_7d"></dil-amount-change>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<ng-container *ngIf="!asset.editHoldings">
+					<button mat-icon-button (click)="editAssetHoldings(asset)">
+						<mat-icon>edit</mat-icon>
+					</button>
+				</ng-container>
+				<ng-container *ngIf="asset.editHoldings">
+					<button mat-icon-button (click)="saveAssetHoldings(asset)">
+						<mat-icon>check</mat-icon>
+					</button>
+				</ng-container>
 			</mat-cell>
 		</ng-container>
 
@@ -41,14 +65,26 @@
 				<span>Holdings</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
-				<div>
+				<div class="">
 					<span>{{ asset.units * asset.market_data.current_price.usd | currency }}</span>
 					<br />
 					<span class="text-gray-500">
-						{{ asset.units | number: '1.2-2' }} {{ asset.symbol.toUpperCase() }}
+						{{ asset.units || 0 | number: '1.2-6' }} {{ asset.symbol.toUpperCase() }}
 					</span>
+					<br />
+					<ng-container *ngIf="asset.editHoldings">
+						<mat-form-field>
+							<mat-label>Edit units</mat-label>
+							<input
+								matInput
+								autocomplete="off"
+								[(ngModel)]="asset.units"
+								(keyup.enter)="saveAssetHoldings(asset)"
+							/>
+						</mat-form-field>
+					</ng-container>
 				</div>
 			</mat-cell>
 		</ng-container>
-	</mat-table>
+	</table>
 </div>

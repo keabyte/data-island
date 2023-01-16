@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CoinGeckoService } from 'src/app/shared/services/coin-gecko.service';
 import { AssetPricePoint, Portfolio } from 'src/app/shared/services/portfolio.service';
 
+declare type AssetRow = AssetPricePoint & { editHoldings?: boolean };
+
 @Component({
 	selector: 'dil-portfolio-details',
 	templateUrl: './portfolio-details.component.html',
@@ -14,9 +16,9 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	totalPortfolioValue: number = 0;
 
 	@ViewChild(MatSort) sort: MatSort;
-	dataSource: MatTableDataSource<AssetPricePoint> = new MatTableDataSource<AssetPricePoint>();
+	dataSource: MatTableDataSource<AssetRow> = new MatTableDataSource<AssetRow>();
 
-	displayedColumns = ['name', 'price', 'holdings', 'price_change_percentage'];
+	displayedColumns = ['name', 'price', 'holdings', 'price_change_percentage', 'actions'];
 
 	constructor(private coinService: CoinGeckoService) {}
 
@@ -40,5 +42,13 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 				this.totalPortfolioValue += pricePoint.units * pricePoint.market_data.current_price['usd'];
 			});
 		}
+	}
+
+	editAssetHoldings(assetRow: AssetRow) {
+		assetRow.editHoldings = true;
+	}
+
+	saveAssetHoldings(assetRow: AssetRow) {
+		assetRow.editHoldings = false;
 	}
 }
