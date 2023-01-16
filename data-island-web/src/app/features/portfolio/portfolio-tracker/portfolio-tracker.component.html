@@ -21,8 +21,23 @@
 				</div>
 			</div>
 		</ng-container>
+		<div class="flex px-2 py-2 cursor-pointer hover:bg-gray-100 rounded w-full text-gray-500" matRipple>
+			<div class="p-2">
+				<mat-icon class="material-symbols-outlined">add_circle</mat-icon>
+			</div>
+
+			<div class="flex-1 py-2">
+				<span class="font-semibold">Add portfolio</span>
+			</div>
+		</div>
 	</div>
 	<div class="col-span-9">
+		<ng-container *ngIf="!portfolios.length">
+			<div class="bg-gradient-to-r from-sky-400 to-blue-500 text-white p-4 text-xl rounded">
+				No portfolios created yet
+			</div>
+		</ng-container>
+
 		<ng-container *ngIf="selectedPortfolio">
 			<dil-portfolio-details
 				[portfolio]="selectedPortfolio"

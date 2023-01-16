@@ -1,12 +1,33 @@
 <div class="col-span-9">
 	<div class="flex">
 		<div class="flex-1">
-			<h1>
-				{{ portfolio.name }}
-				<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
-			</h1>
+			<ng-container *ngIf="!editingPortfolio">
+				<span class="text-2xl">{{ portfolio.name }}</span>
+			</ng-container>
+			<ng-container *ngIf="editingPortfolio">
+				<input
+					#portfolioNameInput
+					class="text-2xl"
+					placeholder="Portfolio name"
+					autocomplete="off"
+					[(ngModel)]="portfolio.name"
+					(keydown.enter)="editingPortfolio = false"
+				/>
+			</ng-container>
+
+			<br />
+			<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
 		</div>
 		<div>
+			<button mat-icon-button>
+				<mat-icon
+					class="material-symbols-outlined text-gray-500"
+					matTooltip="Edit portfolio"
+					(click)="editPortfolio()"
+				>
+					edit
+				</mat-icon>
+			</button>
 			<button mat-icon-button>
 				<mat-icon
 					class="material-symbols-outlined text-gray-500"
@@ -64,7 +85,9 @@
 			<mat-cell *matCellDef="let asset">
 				<ng-container *ngIf="!asset.editHoldings">
 					<button mat-icon-button (click)="editAssetHoldings(asset)">
-						<mat-icon class="material-symbols-outlined" matTooltip="Edit asset">edit</mat-icon>
+						<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Edit asset">
+							edit
+						</mat-icon>
 					</button>
 				</ng-container>
 				<ng-container *ngIf="asset.editHoldings">
@@ -95,16 +118,14 @@
 					</span>
 					<br />
 					<ng-container *ngIf="asset.editHoldings">
-						<mat-form-field>
-							<mat-label>Edit units</mat-label>
-							<input
-								#unitsInput
-								matInput
-								autocomplete="off"
-								[(ngModel)]="asset.units"
-								(keyup.enter)="saveAssetHoldings(asset)"
-							/>
-						</mat-form-field>
+						<input
+							class="w-full p-1"
+							#unitsInput
+							autocomplete="off"
+							[(ngModel)]="asset.units"
+							placeholder="Units"
+							(keydown.enter)="saveAssetHoldings(asset)"
+						/>
 					</ng-container>
 				</div>
 			</mat-cell>

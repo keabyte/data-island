@@ -26,7 +26,10 @@ declare type AssetRow = AssetPricePoint & { editHoldings?: boolean };
 })
 export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 	@ViewChildren('unitsInput') inputRows: QueryList<ElementRef>;
+	@ViewChild('portfolioNameInput') portfolioNameInput: ElementRef;
+
 	@Input() portfolio: Portfolio;
+	editingPortfolio = false;
 	totalPortfolioValue: number = 0;
 
 	@ViewChild(MatSort) sort: MatSort;
@@ -64,10 +67,7 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 		this.dataSource.data.forEach(a => (a.editHoldings = false));
 
 		assetRow.editHoldings = true;
-		setTimeout(() => {
-			console.log(this.inputRows);
-			this.inputRows.last.nativeElement.focus();
-		});
+		setTimeout(() => this.inputRows.last.nativeElement.focus());
 	}
 
 	saveAssetHoldings(assetRow: AssetRow) {
@@ -76,5 +76,10 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 
 	deleteAsset(assetRow: AssetRow) {
 		this.dataSource.data = this.dataSource.data.filter(a => a.id !== assetRow.id);
+	}
+
+	editPortfolio() {
+		this.editingPortfolio = true;
+		setTimeout(() => this.portfolioNameInput.nativeElement.focus());
 	}
 }
