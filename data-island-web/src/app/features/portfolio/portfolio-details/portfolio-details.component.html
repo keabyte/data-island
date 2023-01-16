@@ -4,12 +4,12 @@
 		<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
 	</h1>
 	<h2>Assets</h2>
-	<mat-table [dataSource]="dataSource">
+	<mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
 		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 		<mat-row *matRowDef="let asset; columns: displayedColumns" class="font-semibold"></mat-row>
 
 		<ng-container matColumnDef="name">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
 				<span>Name</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
@@ -19,7 +19,7 @@
 		</ng-container>
 
 		<ng-container matColumnDef="price">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
 				<span>Price</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
@@ -28,7 +28,7 @@
 		</ng-container>
 
 		<ng-container matColumnDef="price_change_percentage">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
 				<span>7D %</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
@@ -37,7 +37,7 @@
 		</ng-container>
 
 		<ng-container matColumnDef="holdings">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef mat-sort-header="units">
 				<span>Holdings</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
