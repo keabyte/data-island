@@ -45,18 +45,21 @@
 		</ng-container>
 
 		<ng-container matColumnDef="actions">
-			<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef></mat-header-cell>
 			<mat-cell *matCellDef="let asset">
 				<ng-container *ngIf="!asset.editHoldings">
 					<button mat-icon-button (click)="editAssetHoldings(asset)">
-						<mat-icon>edit</mat-icon>
+						<mat-icon class="material-symbols-outlined">edit</mat-icon>
 					</button>
 				</ng-container>
 				<ng-container *ngIf="asset.editHoldings">
 					<button mat-icon-button (click)="saveAssetHoldings(asset)">
-						<mat-icon>check</mat-icon>
+						<mat-icon class="material-symbols-outlined text-blue-600">done_outline</mat-icon>
 					</button>
 				</ng-container>
+				<button mat-icon-button (click)="deleteAsset(asset)">
+					<mat-icon class="material-symbols-outlined text-red-600">delete</mat-icon>
+				</button>
 			</mat-cell>
 		</ng-container>
 
@@ -65,7 +68,7 @@
 				<span>Holdings</span>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let asset">
-				<div class="">
+				<div>
 					<span>{{ asset.units * asset.market_data.current_price.usd | currency }}</span>
 					<br />
 					<span class="text-gray-500">
@@ -76,6 +79,7 @@
 						<mat-form-field>
 							<mat-label>Edit units</mat-label>
 							<input
+								#unitsInput
 								matInput
 								autocomplete="off"
 								[(ngModel)]="asset.units"

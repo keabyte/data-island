@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	Input,
+	OnChanges,
+	OnInit,
+	QueryList,
+	SimpleChanges,
+	ViewChild,
+	ViewChildren
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoinGeckoService } from 'src/app/shared/services/coin-gecko.service';
@@ -12,6 +23,7 @@ declare type AssetRow = AssetPricePoint & { editHoldings?: boolean };
 	styleUrls: ['./portfolio-details.component.scss']
 })
 export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChanges {
+	@ViewChildren('unitsInput') inputRows: QueryList<ElementRef>;
 	@Input() portfolio: Portfolio;
 	totalPortfolioValue: number = 0;
 
@@ -45,10 +57,20 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	}
 
 	editAssetHoldings(assetRow: AssetRow) {
+		this.dataSource.data.forEach(a => (a.editHoldings = false));
+
 		assetRow.editHoldings = true;
+		setTimeout(() => {
+			console.log(this.inputRows);
+			this.inputRows.last.nativeElement.focus();
+		});
 	}
 
 	saveAssetHoldings(assetRow: AssetRow) {
 		assetRow.editHoldings = false;
+	}
+
+	deleteAsset(assetRow: AssetRow) {
+		this.dataSource.data = this.dataSource.data.filter(a => a.id !== assetRow.id);
 	}
 }
