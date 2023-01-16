@@ -24,7 +24,10 @@
 	</div>
 	<div class="col-span-9">
 		<ng-container *ngIf="selectedPortfolio">
-			<dil-portfolio-details [portfolio]="selectedPortfolio"></dil-portfolio-details>
+			<dil-portfolio-details
+				[portfolio]="selectedPortfolio"
+				(portfolioDeleted)="deletePortfolio($event)"
+			></dil-portfolio-details>
 		</ng-container>
 	</div>
 </div>

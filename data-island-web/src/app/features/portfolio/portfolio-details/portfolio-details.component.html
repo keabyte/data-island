@@ -1,8 +1,23 @@
 <div class="col-span-9">
-	<h1>
-		{{ portfolio.name }}
-		<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
-	</h1>
+	<div class="flex">
+		<div class="flex-1">
+			<h1>
+				{{ portfolio.name }}
+				<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
+			</h1>
+		</div>
+		<div>
+			<button mat-icon-button>
+				<mat-icon
+					class="material-symbols-outlined text-gray-500"
+					matTooltip="Delete portfolio"
+					(click)="portfolioDeleted.emit(portfolio)"
+				>
+					delete
+				</mat-icon>
+			</button>
+		</div>
+	</div>
 	<h2>Assets</h2>
 	<table
 		mat-table
@@ -49,16 +64,20 @@
 			<mat-cell *matCellDef="let asset">
 				<ng-container *ngIf="!asset.editHoldings">
 					<button mat-icon-button (click)="editAssetHoldings(asset)">
-						<mat-icon class="material-symbols-outlined">edit</mat-icon>
+						<mat-icon class="material-symbols-outlined" matTooltip="Edit asset">edit</mat-icon>
 					</button>
 				</ng-container>
 				<ng-container *ngIf="asset.editHoldings">
 					<button mat-icon-button (click)="saveAssetHoldings(asset)">
-						<mat-icon class="material-symbols-outlined text-blue-600">done_outline</mat-icon>
+						<mat-icon class="material-symbols-outlined text-green-600" matTooltip="Done">
+							check_circle
+						</mat-icon>
 					</button>
 				</ng-container>
 				<button mat-icon-button (click)="deleteAsset(asset)">
-					<mat-icon class="material-symbols-outlined text-red-600">delete</mat-icon>
+					<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Delete asset">
+						delete
+					</mat-icon>
 				</button>
 			</mat-cell>
 		</ng-container>

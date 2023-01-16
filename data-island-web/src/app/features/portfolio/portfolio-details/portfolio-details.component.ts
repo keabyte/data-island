@@ -2,9 +2,11 @@ import {
 	AfterViewInit,
 	Component,
 	ElementRef,
+	EventEmitter,
 	Input,
 	OnChanges,
 	OnInit,
+	Output,
 	QueryList,
 	SimpleChanges,
 	ViewChild,
@@ -31,6 +33,8 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	dataSource: MatTableDataSource<AssetRow> = new MatTableDataSource<AssetRow>();
 
 	displayedColumns = ['name', 'price', 'holdings', 'price_change_percentage', 'actions'];
+
+	@Output() portfolioDeleted = new EventEmitter<Portfolio>();
 
 	constructor(private coinService: CoinGeckoService) {}
 

@@ -23,4 +23,9 @@ export class PortfolioTrackerComponent implements OnInit {
 	selectPortfolio(portfolio: Portfolio) {
 		this.selectedPortfolio = portfolio;
 	}
+
+	deletePortfolio(portfolio: Portfolio) {
+		this.portfolios = this.portfolios.filter(p => p.order !== portfolio.order);
+		this.selectPortfolio(this.portfolios[0]);
+	}
 }
