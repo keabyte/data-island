@@ -19,7 +19,7 @@ jobs:
           github_token: ${{ secrets.GHUB_TOKEN }}
 
       - name: Set version
-        run: sed -ri 's/{{VERSION}}/${{ steps.tag_version.outputs.new_tag }}/g' src/environments/environment.prod.ts
+        run: sed -i s/{{VERSION}}/${{ steps.tag_version.outputs.new_tag }}/g src/environments/environment.prod.ts
 
       - name: Install dependencies
         run: npm install
