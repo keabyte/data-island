@@ -1,0 +1,15 @@
+service: data-island-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  getPortfolios:
+    handler: functions/getPortfolios.handler
+    url: true
+    events:
+      - httpApi:
+          path: /portfolios
+          method: get
