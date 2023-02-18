@@ -5,11 +5,19 @@ provider:
   name: aws
   runtime: nodejs18.x
 
+plugins:
+  - serverless-offline
+
 functions:
   getPortfolios:
-    handler: functions/getPortfolios.handler
-    url: true
+    handler: functions/portfolio-get.handler
     events:
       - httpApi:
           path: /portfolios
           method: get
+  putPortfolio:
+    handler: functions/portfolio-put.handler
+    events:
+      - httpApi:
+          path: /portfolio
+          method: put
