@@ -12,6 +12,10 @@ export class PortfolioService {
 	getPortfolios() {
 		return this.http.get<Portfolio[]>(environment.apiURL + '/portfolios');
 	}
+
+	putPortfolio(portfolio: Partial<Portfolio>) {
+		return this.http.put<Portfolio>(environment.apiURL + '/portfolios', portfolio);
+	}
 }
 
 export interface Portfolio {

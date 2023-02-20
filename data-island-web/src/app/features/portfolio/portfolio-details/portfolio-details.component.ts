@@ -54,7 +54,7 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	loadAssetDetails() {
 		this.totalPortfolioValue = 0;
 		this.dataSource.data = [];
-		for (const asset of this.portfolio.assets) {
+		for (const asset of this.portfolio.assets || []) {
 			this.coinService.getCoinById(asset.id).subscribe(response => {
 				const pricePoint = { ...response, ...asset };
 				this.dataSource.data = [...this.dataSource.data, pricePoint];

@@ -33,16 +33,18 @@ export class PortfolioTrackerComponent implements OnInit {
 	createPortfolio() {
 		const maxOrderAssetRow = this.portfolios.sort((a, b) => (a.order > b.order ? -1 : 1))[0];
 
-		const portfolio: Portfolio = {
-			id: '',
+		const portfolioRequest: Portfolio = {
+			id: null,
 			name: 'New portfolio',
 			assets: [],
 			createdDate: new Date(),
 			totalValue: 0,
 			order: (maxOrderAssetRow?.order || 0) + 1
 		};
-		this.portfolios.push(portfolio);
-		this.portfolios = this.portfolios.sort((a, b) => (a.order > b.order ? 1 : -1));
-		this.selectPortfolio(portfolio);
+		this.portfolioService.putPortfolio(portfolioRequest).subscribe(resp => {
+			this.portfolios.push(resp);
+			this.portfolios = this.portfolios.sort((a, b) => (a.order > b.order ? 1 : -1));
+			this.selectPortfolio(resp);
+		});
 	}
 }
