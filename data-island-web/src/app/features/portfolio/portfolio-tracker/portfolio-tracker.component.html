@@ -4,7 +4,7 @@
 		<ng-container *ngFor="let portfolio of portfolios">
 			<div
 				class="flex px-2 py-2 cursor-pointer hover:bg-gray-100 rounded w-full"
-				[ngClass]="{ 'selected-portfolio text-white': selectedPortfolio.order === portfolio.order }"
+				[ngClass]="{ 'selected-portfolio text-white': selectedPortfolio.id === portfolio.id }"
 				matRipple
 				(click)="selectPortfolio(portfolio)"
 			>
@@ -15,12 +15,12 @@
 				<div class="flex-1">
 					<span class="font-semibold">{{ portfolio.name }}</span>
 					<br />
-					<span [ngClass]="{ 'text-gray-500': selectedPortfolio.order !== portfolio.order }">
+					<span [ngClass]="{ 'text-gray-500': selectedPortfolio.id !== portfolio.id }">
 						{{ portfolio.totalValue | currency }}
 					</span>
 				</div>
 
-				<div *ngIf="selectedPortfolio.order === portfolio.order" class="pt-2">
+				<div *ngIf="selectedPortfolio.id === portfolio.id" class="pt-2">
 					<mat-icon>chevron_right</mat-icon>
 				</div>
 			</div>

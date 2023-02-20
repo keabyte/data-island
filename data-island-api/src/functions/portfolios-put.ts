@@ -10,7 +10,13 @@ module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGateway
 		endpoint: 'http://localhost:8000'
 	});
 
-	const portfolio = { id: uuidv4(), name: 'New Portfolio' };
+	const portfolio = {
+		id: uuidv4(),
+		name: 'New Portfolio',
+		order: 1,
+		createdDate: new Date().toISOString(),
+		assets: []
+	};
 
 	const params = {
 		TableName: 'disl_portfolio',

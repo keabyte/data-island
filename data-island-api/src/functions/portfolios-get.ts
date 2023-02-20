@@ -16,7 +16,7 @@ module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGateway
 		const result = await dynamodb.scan(params);
 		const portfolios = result.Items?.map(item => unmarshall(item));
 		return {
-			statusCode: 500,
+			statusCode: 200,
 			body: JSON.stringify(portfolios)
 		};
 	} catch (error) {

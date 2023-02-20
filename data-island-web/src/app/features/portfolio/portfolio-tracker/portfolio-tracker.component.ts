@@ -25,7 +25,7 @@ export class PortfolioTrackerComponent implements OnInit {
 	}
 
 	deletePortfolio(portfolio: Portfolio) {
-		this.portfolios = this.portfolios.filter(p => p.order !== portfolio.order);
+		this.portfolios = this.portfolios.filter(p => p.id !== portfolio.id);
 		this.selectPortfolio(this.portfolios.reverse().find(p => p.order < portfolio.order) || this.portfolios[0]);
 		this.portfolios.reverse();
 	}
@@ -34,6 +34,7 @@ export class PortfolioTrackerComponent implements OnInit {
 		const maxOrderAssetRow = this.portfolios.sort((a, b) => (a.order > b.order ? -1 : 1))[0];
 
 		const portfolio: Portfolio = {
+			id: '',
 			name: 'New portfolio',
 			assets: [],
 			createdDate: new Date(),

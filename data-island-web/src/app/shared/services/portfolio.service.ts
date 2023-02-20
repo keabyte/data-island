@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CoinDetails } from './coin-gecko.service';
 
 @Injectable({
@@ -10,32 +10,12 @@ export class PortfolioService {
 	constructor(private http: HttpClient) {}
 
 	getPortfolios() {
-		return of([
-			{
-				name: 'Main',
-				order: 1,
-				totalValue: 1000,
-				createdDate: new Date(),
-				assets: [
-					{ id: 'bitcoin', units: 1.304 },
-					{ id: 'ethereum', units: 2.5 }
-				]
-			},
-			{
-				name: 'Alts',
-				order: 2,
-				totalValue: 1000,
-				createdDate: new Date(),
-				assets: [
-					{ id: 'algorand', units: 3001 },
-					{ id: 'cardano', units: 2000 }
-				]
-			}
-		]);
+		return this.http.get<Portfolio[]>(environment.apiURL + '/portfolios');
 	}
 }
 
 export interface Portfolio {
+	id: string;
 	name: string;
 	order: number;
 	totalValue: number;
