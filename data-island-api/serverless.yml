@@ -6,18 +6,48 @@ provider:
   runtime: nodejs18.x
 
 plugins:
+  - serverless-plugin-typescript
+  - serverless-dynamodb-local
   - serverless-offline
 
 functions:
   getPortfolios:
-    handler: functions/portfolio-get.handler
+    handler: src/functions/portfolios-get.handler
     events:
       - httpApi:
           path: /portfolios
           method: get
   putPortfolio:
-    handler: functions/portfolio-put.handler
+    handler: src/functions/portfolios-put.handler
     events:
       - httpApi:
-          path: /portfolio
+          path: /portfolios
           method: put
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: disl_portfolio
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+      convertEmptyValues: true

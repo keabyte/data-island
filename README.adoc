@@ -1,3 +1,15 @@
 # data-island
+A serverless application for viewing and tracking cryptocurrency markets.
+
+*Demo https://dataisland.io*
+
+*Tech stack*
+
+- Angular
+- Lambda
+- DynamoDB
+- GitHub Actions
  
 include::data-island-api/README.adoc[]
+
+include::data-island-web/README.adoc[]
