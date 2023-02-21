@@ -23,6 +23,12 @@ functions:
       - httpApi:
           path: /portfolios
           method: post
+  deletePortfolio:
+    handler: src/functions/portfolios-delete.handler
+    events:
+      - httpApi:
+          path: /portfolios/{portfolioId}
+          method: delete
 
 resources:
   Resources:
