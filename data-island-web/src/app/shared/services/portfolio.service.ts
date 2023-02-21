@@ -20,6 +20,10 @@ export class PortfolioService {
 	deletePortfolio(portfolioId: string) {
 		return this.http.delete<any>(`${environment.apiURL}/portfolios/${portfolioId}`);
 	}
+
+	updatePortfolio(portfolio: Portfolio) {
+		return this.http.put<Portfolio>(`${environment.apiURL}/portfolios/${portfolio.id}`, portfolio);
+	}
 }
 
 export interface Portfolio {

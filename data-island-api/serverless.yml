@@ -12,23 +12,29 @@ plugins:
 
 functions:
   getPortfolios:
-    handler: src/functions/portfolios-get.handler
+    handler: src/functions/portfolio/get-portfolios.handler
     events:
       - httpApi:
           path: /portfolios
           method: get
   createPortfolio:
-    handler: src/functions/portfolios-post.handler
+    handler: src/functions/portfolio/post-portfolio.handler
     events:
       - httpApi:
           path: /portfolios
           method: post
   deletePortfolio:
-    handler: src/functions/portfolios-delete.handler
+    handler: src/functions/portfolio/delete-portfolio.handler
     events:
       - httpApi:
           path: /portfolios/{portfolioId}
           method: delete
+  updatePortfolio:
+    handler: src/functions/portfolio/put-portfolio.handler
+    events:
+      - httpApi:
+          path: /portfolios/{portfolioId}
+          method: put
 
 resources:
   Resources:

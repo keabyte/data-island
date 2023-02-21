@@ -29,7 +29,7 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	@ViewChild('portfolioNameInput') portfolioNameInput: ElementRef;
 
 	@Input() portfolio: Portfolio;
-	editingPortfolio = false;
+	editingPortfolio = true;
 	totalPortfolioValue: number = 0;
 
 	@ViewChild(MatSort) sort: MatSort;
@@ -38,6 +38,7 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	displayedColumns = ['name', 'price', 'holdings', 'price_change_percentage', 'actions'];
 
 	@Output() portfolioDeleted = new EventEmitter<Portfolio>();
+	@Output() portfolioUpdated = new EventEmitter<Portfolio>();
 
 	constructor(private coinService: CoinGeckoService) {}
 
@@ -79,7 +80,6 @@ export class PortfolioDetailsComponent implements OnInit, AfterViewInit, OnChang
 	}
 
 	editPortfolio() {
-		this.editingPortfolio = true;
 		setTimeout(() => this.portfolioNameInput.nativeElement.focus());
 	}
 }

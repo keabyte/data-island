@@ -11,7 +11,7 @@
 					placeholder="Portfolio name"
 					autocomplete="off"
 					[(ngModel)]="portfolio.name"
-					(keydown.enter)="editingPortfolio = false"
+					(change)="portfolioUpdated.emit(portfolio)"
 				/>
 			</ng-container>
 

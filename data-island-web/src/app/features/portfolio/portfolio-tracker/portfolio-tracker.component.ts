@@ -49,4 +49,11 @@ export class PortfolioTrackerComponent implements OnInit {
 			this.selectPortfolio(resp);
 		});
 	}
+
+	updatePortfolio(portfolio: Portfolio) {
+		this.portfolioService.updatePortfolio(portfolio).subscribe(resp => {
+			const updatedIndex = this.portfolios.findIndex(p => p.id === resp.id);
+			this.portfolios[updatedIndex] = resp;
+		});
+	}
 }

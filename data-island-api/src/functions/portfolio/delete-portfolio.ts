@@ -1,7 +1,7 @@
 import { DeleteItemCommand, DynamoDB } from '@aws-sdk/client-dynamodb';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { Request } from '../util/request';
-import { Table } from '../util/table';
+import { Request } from '../../util/request';
+import { Table } from '../../util/table';
 
 module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const request = new Request(event);
