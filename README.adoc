@@ -9,6 +9,7 @@ A serverless application for viewing and tracking cryptocurrency markets.
 - Lambda
 - DynamoDB
 - GitHub Actions
+- CoinGecko API V3
  
 include::data-island-api/README.adoc[]
 
