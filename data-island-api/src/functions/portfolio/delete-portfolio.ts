@@ -1,14 +1,11 @@
-import { DeleteItemCommand, DynamoDB } from '@aws-sdk/client-dynamodb';
+import { DeleteItemCommand } from '@aws-sdk/client-dynamodb';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { dynamodbClient } from '../../util/integration';
 import { Request } from '../../util/request';
 import { Table } from '../../util/table';
 
 module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const request = new Request(event);
-	const dynamodb = new DynamoDB({
-		region: 'localhost',
-		endpoint: 'http://localhost:8000'
-	});
 
 	const { portfolioId } = request.pathParameters;
 
@@ -20,7 +17,7 @@ module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGateway
 	};
 
 	try {
-		await dynamodb.send(new DeleteItemCommand(params));
+		await dynamodbClient().send(new DeleteItemCommand(params));
 		return {
 			statusCode: 200,
 			body: JSON.stringify(`Deleted portfolio ${portfolioId}`)

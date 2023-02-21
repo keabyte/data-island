@@ -1,15 +1,12 @@
-import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import { marshall } from '@aws-sdk/util-dynamodb';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { dynamodbClient } from '../../util/integration';
 import { Request } from '../../util/request';
 import { Table } from '../../util/table';
+import { PortfolioService } from './portfolio-service';
 
 module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const request = new Request(event);
-	const dynamodb = new DynamoDB({
-		region: 'localhost',
-		endpoint: 'http://localhost:8000'
-	});
 
 	const { portfolioId } = request.pathParameters;
 
@@ -27,11 +24,11 @@ module.exports.handler = async (event: APIGatewayProxyEvent): Promise<APIGateway
 	};
 
 	try {
-		await dynamodb.putItem(params);
+		await dynamodbClient().putItem(params);
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify(portfolio)
+			body: JSON.stringify(await new PortfolioService().getPortfolioById(portfolioId))
 		};
 	} catch (err) {
 		console.log(err);
