@@ -1,0 +1,17 @@
+{
+	"devDependencies": {
+		"@types/aws-lambda": "^8.10.110",
+		"@types/dynamodb": "^1.3.2",
+		"@types/uuid": "^9.0.0",
+		"@types/node": "^18.14.0",
+		"serverless-dynamodb-local": "^0.2.40",
+		"serverless-offline": "^12.0.4",
+		"serverless-plugin-typescript": "^2.1.4",
+		"typescript": "^4.9.5"
+	},
+	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.272.0",
+		"@aws-sdk/util-dynamodb": "^3.272.0",
+		"uuid": "^9.0.0"
+	}
+}

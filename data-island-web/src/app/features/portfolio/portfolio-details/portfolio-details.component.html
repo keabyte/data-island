@@ -1,0 +1,124 @@
+<div class="col-span-9">
+	<div class="flex">
+		<div class="flex-1">
+			<ng-container *ngIf="!editingPortfolio">
+				<span class="text-2xl">{{ portfolio.name }}</span>
+			</ng-container>
+			<ng-container *ngIf="editingPortfolio">
+				<input
+					#portfolioNameInput
+					class="text-2xl"
+					placeholder="Portfolio name"
+					autocomplete="off"
+					[(ngModel)]="portfolio.name"
+					(change)="portfolioUpdated.emit(portfolio)"
+				/>
+			</ng-container>
+
+			<br />
+			<span class="text-gray-500 text-xl">{{ totalPortfolioValue | currency }}</span>
+		</div>
+		<div>
+			<button mat-icon-button (click)="editPortfolio()">
+				<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Edit portfolio">edit</mat-icon>
+			</button>
+			<button mat-icon-button (click)="portfolioDeleted.emit(portfolio)">
+				<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Delete portfolio">
+					delete
+				</mat-icon>
+			</button>
+		</div>
+	</div>
+	<h2>Assets</h2>
+	<table
+		mat-table
+		[dataSource]="dataSource"
+		matSort
+		matSortActive="name"
+		matSortDirection="asc"
+		matSortDisableClear
+		class="w-full"
+	>
+		<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+		<mat-row *matRowDef="let asset; columns: displayedColumns" class="font-semibold"></mat-row>
+
+		<ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				<span>Name</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<img src="{{ asset.image.large }}" class="mr-2 w-8" />
+				<span>{{ asset.name }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				<span>Price</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<span>{{ asset.market_data.current_price.usd | currency }}</span>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="price_change_percentage">
+			<mat-header-cell *matHeaderCellDef>
+				<span>7D %</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<dil-amount-change [changePercent]="asset.market_data.price_change_percentage_7d"></dil-amount-change>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<mat-header-cell *matHeaderCellDef></mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<ng-container *ngIf="!asset.editHoldings">
+					<button mat-icon-button (click)="editAssetHoldings(asset)">
+						<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Edit asset">
+							edit
+						</mat-icon>
+					</button>
+				</ng-container>
+				<ng-container *ngIf="asset.editHoldings">
+					<button mat-icon-button (click)="saveAssetHoldings(asset)">
+						<mat-icon class="material-symbols-outlined text-green-600" matTooltip="Done">
+							check_circle
+						</mat-icon>
+					</button>
+				</ng-container>
+				<button mat-icon-button (click)="deleteAsset(asset)">
+					<mat-icon class="material-symbols-outlined text-gray-500" matTooltip="Delete asset">
+						delete
+					</mat-icon>
+				</button>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="holdings">
+			<mat-header-cell *matHeaderCellDef mat-sort-header="units">
+				<span>Holdings</span>
+			</mat-header-cell>
+			<mat-cell *matCellDef="let asset">
+				<div>
+					<span>{{ asset.units * asset.market_data.current_price.usd | currency }}</span>
+					<br />
+					<span class="text-gray-500">
+						{{ asset.units || 0 | number: '1.2-6' }} {{ asset.symbol.toUpperCase() }}
+					</span>
+					<br />
+					<ng-container *ngIf="asset.editHoldings">
+						<input
+							class="w-full p-1"
+							#unitsInput
+							autocomplete="off"
+							[(ngModel)]="asset.units"
+							placeholder="Units"
+							(keydown.enter)="saveAssetHoldings(asset)"
+						/>
+					</ng-container>
+				</div>
+			</mat-cell>
+		</ng-container>
+	</table>
+</div>

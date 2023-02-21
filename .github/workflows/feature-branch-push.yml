@@ -2,12 +2,12 @@ name: feature-branch-push
 on:
   push:
     branches:
-      - '**'
-      - '!main'
+      - "**"
+      - "!main"
 jobs:
   web-build:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: staging
       url: http://staging.dataisland.io/${{ github.ref_name }}
     defaults:
@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set version
-        run: sed -i 's/{{VERSION}}/${{ github.ref_name }}/g' src/environments/environment.prod.ts
+        run: sed -i -e 's:{{VERSION}}:${{ github.ref_name }}:g' src/environments/environment.prod.ts
 
       - name: Install dependencies
         run: npm install
