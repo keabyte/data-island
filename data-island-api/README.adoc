@@ -14,7 +14,7 @@ serverless invoke local --function <function name>
 ```
 
 #### Start
-- Start the databse `sls dynamodb start --migrate`
+- Start the databse `serverless dynamodb start --migrate`
 - Start the application `serverless offline`
 
 ### Deployment

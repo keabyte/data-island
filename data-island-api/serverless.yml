@@ -17,12 +17,12 @@ functions:
       - httpApi:
           path: /portfolios
           method: get
-  putPortfolio:
-    handler: src/functions/portfolios-put.handler
+  createPortfolio:
+    handler: src/functions/portfolios-post.handler
     events:
       - httpApi:
           path: /portfolios
-          method: put
+          method: post
 
 resources:
   Resources:
