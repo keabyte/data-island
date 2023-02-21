@@ -25,9 +25,11 @@ export class PortfolioTrackerComponent implements OnInit {
 	}
 
 	deletePortfolio(portfolio: Portfolio) {
-		this.portfolios = this.portfolios.filter(p => p.id !== portfolio.id);
-		this.selectPortfolio(this.portfolios.reverse().find(p => p.order < portfolio.order) || this.portfolios[0]);
-		this.portfolios.reverse();
+		this.portfolioService.deletePortfolio(portfolio.id).subscribe(resp => {
+			this.portfolios = this.portfolios.filter(p => p.id !== portfolio.id);
+			this.selectPortfolio(this.portfolios.reverse().find(p => p.order < portfolio.order) || this.portfolios[0]);
+			this.portfolios.reverse();
+		});
 	}
 
 	createPortfolio() {
@@ -41,7 +43,7 @@ export class PortfolioTrackerComponent implements OnInit {
 			totalValue: 0,
 			order: (maxOrderAssetRow?.order || 0) + 1
 		};
-		this.portfolioService.putPortfolio(portfolioRequest).subscribe(resp => {
+		this.portfolioService.createPortfolio(portfolioRequest).subscribe(resp => {
 			this.portfolios.push(resp);
 			this.portfolios = this.portfolios.sort((a, b) => (a.order > b.order ? 1 : -1));
 			this.selectPortfolio(resp);

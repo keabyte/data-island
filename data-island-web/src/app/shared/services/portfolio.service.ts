@@ -13,8 +13,12 @@ export class PortfolioService {
 		return this.http.get<Portfolio[]>(environment.apiURL + '/portfolios');
 	}
 
-	putPortfolio(portfolio: Partial<Portfolio>) {
-		return this.http.put<Portfolio>(environment.apiURL + '/portfolios', portfolio);
+	createPortfolio(portfolio: Partial<Portfolio>) {
+		return this.http.post<Portfolio>(environment.apiURL + '/portfolios', portfolio);
+	}
+
+	deletePortfolio(portfolioId: string) {
+		return this.http.delete<any>(`${environment.apiURL}/portfolios/${portfolioId}`);
 	}
 }
 
