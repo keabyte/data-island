@@ -1,6 +1,10 @@
 name: deploy-production
 on:
   workflow_dispatch:
+
+env:
+  NODE_VERSION: 16.x
+
 jobs:
   web-deploy:
     if: github.ref_name == 'main'
@@ -13,7 +17,7 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{secrets.GHUB_TOKEN}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: main-push.yml
           name: data-island-web-dist
           path: data-island-web-dist
@@ -37,6 +41,7 @@ jobs:
           AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   api-deploy:
     if: github.ref_name == 'main'
     defaults:
@@ -46,15 +51,12 @@ jobs:
     environment:
       name: api-prod
       url: https://api.dataisland.io
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
       - run: npm ci
       - name: Serverless deploy
         uses: serverless/github-action@v3.1
