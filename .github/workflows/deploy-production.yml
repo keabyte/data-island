@@ -38,10 +38,10 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   api-deploy:
+    if: github.ref_name == 'main'
     defaults:
       run:
         working-directory: data-island-api
-    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     environment:
       name: api-prod
@@ -59,7 +59,8 @@ jobs:
       - name: Serverless deploy
         uses: serverless/github-action@v3.1
         with:
-          args: deploy
+          entrypoint: /bin/sh
+          args: -c "cd ./data-island-api && serverless deploy"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
