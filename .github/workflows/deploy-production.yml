@@ -6,7 +6,7 @@ jobs:
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: web-prod
       url: https://dataisland.io
     steps:
       - name: Download build artifacts
@@ -35,5 +35,31 @@ jobs:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
           PATHS: "/*"
           AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  api-deploy:
+    defaults:
+      run:
+        working-directory: data-island-api
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    environment:
+      name: api-prod
+      url: https://api.dataisland.io
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - name: Serverless deploy
+        uses: serverless/github-action@v3.1
+        with:
+          args: deploy
+        env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
