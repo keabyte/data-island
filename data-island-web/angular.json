@@ -67,19 +67,19 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
-						"production": {
-							"browserTarget": "data-island-web:build:production"
+            "production": {
+              "buildTarget": "data-island-web:build:production"
 						},
-						"development": {
-							"browserTarget": "data-island-web:build:development"
+            "development": {
+              "buildTarget": "data-island-web:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "data-island-web:build"
+          "options": {
+            "buildTarget": "data-island-web:build"
 					}
 				},
 				"test": {
