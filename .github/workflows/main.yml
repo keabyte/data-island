@@ -8,4 +8,5 @@ jobs:
     uses: keabyte/keabyte-workflows/.github/workflows/angular-build.yml@main
     secrets: inherit
     with:
-      AWS_S3_BUCKET_NAME: "dataisland.demo.keabyte.com"
+      aws-s3-bucket-name: "dataisland.demo.keabyte.com"
+      build-output-directory: "dist/data-island-web"
