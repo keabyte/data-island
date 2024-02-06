@@ -1,0 +1,11 @@
+name: Build & deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    uses: keabyte/keabyte-workflows/.github/workflows/angular-build.yml@main
+    secrets: inherit
+    with:
+      AWS_S3_BUCKET_NAME: "dataisland.demo.keabyte.com"
